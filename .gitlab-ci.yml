@@ -1,0 +1,196 @@
+include:
+  - project: 'commercial/fng-poc/facit-pipelines'
+    file: '.gitlab-ci.yml'
+    ref: master
+
+# default:
+#   tags:
+#     - nonprod
+#     - ec2
+#     - facitng
+#     - tuipsc
+
+
+Build-Featurebranch:
+  extends: .build-kaniko-image-unmanaged-ecr
+  stage: buildfeature
+  environment: dv1
+  when: on_success
+  variables:
+    # If you need to assume a different iam role to push the image, set the 'KANIKO_AWS_DEPLOYMENT_ROLE' variable.
+    KANIKO_ECR_REPO: "${FACIT_CI_REGISTRY}/${CI_PROJECT_NAME}"
+    KANIKO_DOCKERFILE_NAME: "dev.Dockerfile"
+    KANIKO_BUILD_EXTRA_ARGS: "--build-arg appveyornugetpassword=${FACIT_GITLABNUGET_PASSWORD} --build-arg buildversion=${CI_COMMIT_SHORT_SHA} --build-arg sonarservertoken=${GroupSonarQubeServerToken} --build-arg APM_TRACER_VERSION=${APM_TRACER_VERSION} --destination $KANIKO_ECR_REPO:feature --destination $KANIKO_ECR_REPO:latest"
+    KANIKO_IMAGE_TAG: "$CI_COMMIT_SHORT_SHA"
+    #we need to create our on image to pull latest tags, as we are using enblers template we cannot install anyting
+  rules:
+    - if: $CI_COMMIT_BRANCH =~ /^feature\/.*$/
+  tags:
+    - nonprod
+    - ec2
+    - facitng
+    - tuipsc
+
+Build-Dev:
+  extends: .build-kaniko-image-unmanaged-ecr
+  stage: builddev
+  environment: dv1
+  when: on_success
+  variables:
+    # If you need to assume a different iam role to push the image, set the 'KANIKO_AWS_DEPLOYMENT_ROLE' variable.
+    KANIKO_ECR_REPO: "${FACIT_CI_REGISTRY}/${CI_PROJECT_NAME}"
+    KANIKO_DOCKERFILE_NAME: "dev.Dockerfile"
+    KANIKO_BUILD_EXTRA_ARGS: "--build-arg appveyornugetpassword=${FACIT_GITLABNUGET_PASSWORD} --build-arg buildversion=${CI_COMMIT_SHORT_SHA} --build-arg sonarservertoken=${GroupSonarQubeServerToken} --build-arg APM_TRACER_VERSION=${APM_TRACER_VERSION} --destination $KANIKO_ECR_REPO:DEV --destination $KANIKO_ECR_REPO:latest"
+    KANIKO_IMAGE_TAG: "$CI_COMMIT_SHORT_SHA"
+    #we need to create our on image to pull latest tags, as we are using enblers template we cannot install anyting
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
+  tags:
+    - nonprod
+    - ec2
+    - facitng
+    - tuipsc
+
+Build-Loadtest:
+  extends: .build-kaniko-image-unmanaged-ecr
+  stage: builddev
+  environment: dv2
+  when: on_success
+  variables:
+    ## If you need to assume a different iam role to push the image, set the 'KANIKO_AWS_DEPLOYMENT_ROLE' variable.
+    KANIKO_ECR_REPO: "${FACIT_CI_REGISTRY}/${CI_PROJECT_NAME}"
+    KANIKO_DOCKERFILE_NAME: "dev.Dockerfile"
+    KANIKO_BUILD_EXTRA_ARGS: "--build-arg appveyornugetpassword=${FACIT_GITLABNUGET_PASSWORD} --build-arg buildversion=${CI_COMMIT_SHORT_SHA} --build-arg sonarservertoken=${GroupSonarQubeServerToken} --build-arg APM_TRACER_VERSION=${APM_TRACER_VERSION} --destination $KANIKO_ECR_REPO:DEV --destination $KANIKO_ECR_REPO:latest"
+    KANIKO_IMAGE_TAG: "$CI_COMMIT_SHORT_SHA"
+    #we need to create our on image to pull latest tags, as we are using enblers template we cannot install anyting
+  rules:
+    - if: $CI_COMMIT_BRANCH == "loadtestenv"
+  tags:
+    - nonprod
+    - ec2
+    - facitng
+    - tuipsc
+
+Build-Sit:
+  extends: .build-kaniko-image-unmanaged-ecr
+  stage: buildsit
+  environment: sit
+  when: on_success
+  variables:
+    # If you need to assume a different iam role to push the image, set the 'KANIKO_AWS_DEPLOYMENT_ROLE' variable.
+    KANIKO_ECR_REPO: "${FACIT_CI_REGISTRY}/${CI_PROJECT_NAME}"
+    KANIKO_DOCKERFILE_NAME: "Dockerfile"
+    KANIKO_BUILD_EXTRA_ARGS: "--build-arg appveyornugetpassword=${FACIT_GITLABNUGET_PASSWORD} --build-arg buildversion=${CI_COMMIT_SHORT_SHA} --build-arg sonarservertoken=${GroupSonarQubeServerToken} --build-arg APM_TRACER_VERSION=${APM_TRACER_VERSION} --destination $KANIKO_ECR_REPO:SIT --destination $KANIKO_ECR_REPO:finalimage --destination $KANIKO_ECR_REPO:latest"
+    KANIKO_IMAGE_TAG: "$CI_COMMIT_SHORT_SHA"
+    #we need to create our on image to pull latest tags, as we are using enblers template we cannot install anyting
+  rules:
+    - if: $CI_COMMIT_BRANCH == "staging"
+  tags:
+    - nonprod
+    - ec2
+    - facitng
+    - tuipsc
+
+Build-Preprod:
+  extends: .build-kaniko-image-unmanaged-ecr
+  stage: buildpprd
+  environment: pprd
+  when: on_success
+  variables:
+    # If you need to assume a different iam role to push the image, set the 'KANIKO_AWS_DEPLOYMENT_ROLE' variable.
+    KANIKO_ECR_REPO: "${FACIT_CI_REGISTRY}/${CI_PROJECT_NAME}"
+    KANIKO_DOCKERFILE_NAME: "Dockerfile"
+    KANIKO_BUILD_EXTRA_ARGS: "--build-arg appveyornugetpassword=${FACIT_GITLABNUGET_PASSWORD} --build-arg buildversion=${CI_COMMIT_SHORT_SHA} --build-arg sonarservertoken=${GroupSonarQubeServerToken} --build-arg APM_TRACER_VERSION=${APM_TRACER_VERSION} --destination $KANIKO_ECR_REPO:PPRD --destination $KANIKO_ECR_REPO:finalimage --destination $KANIKO_ECR_REPO:latest"
+    KANIKO_IMAGE_TAG: "$CI_COMMIT_SHORT_SHA"
+    #we need to create our on image to pull latest tags, as we are using enblers template we cannot install anyting
+  rules:
+    - if: $CI_COMMIT_BRANCH == "preprod"
+  tags:
+    - nonprod
+    - ec2
+    - facitng
+    - tuipsc
+
+Build-Prod:
+  extends: .build-kaniko-image-unmanaged-ecr
+  stage: buildprod
+  environment: prod
+  when: on_success
+  variables:
+    # If you need to assume a different iam role to push the image, set the 'KANIKO_AWS_DEPLOYMENT_ROLE' variable.
+    KANIKO_ECR_REPO: "${FACIT_CI_REGISTRY}/${CI_PROJECT_NAME}"
+    KANIKO_DOCKERFILE_NAME: "Dockerfile"
+    KANIKO_BUILD_EXTRA_ARGS: "--build-arg appveyornugetpassword=${FACIT_GITLABNUGET_PASSWORD} --build-arg buildversion=${CI_COMMIT_SHORT_SHA} --build-arg sonarservertoken=${GroupSonarQubeServerToken} --build-arg APM_TRACER_VERSION=${APM_TRACER_VERSION} --destination $KANIKO_ECR_REPO:PROD --destination $KANIKO_ECR_REPO:finalimage --destination $KANIKO_ECR_REPO:latest"
+    KANIKO_IMAGE_TAG: "$CI_COMMIT_SHORT_SHA"
+    #we need to create our on image to pull latest tags, as we are using enblers template we cannot install anyting
+  rules:
+    - if: $CI_COMMIT_BRANCH == "prod"
+  tags:
+    - nonprod
+    - ec2
+    - facitng
+    - tuipsc
+
+Build-Releasebranch:
+  image:
+    name: gcr.io/kaniko-project/executor:v1.9.1-debug
+    entrypoint: [""]
+  variables:
+    KANIKO_BUILD_EXTRA_ARGS: "--build-arg appveyornugetpassword=${FACIT_GITLABNUGET_PASSWORD} --build-arg buildversion=${CI_COMMIT_SHORT_SHA} --build-arg sonarservertoken=${GroupSonarQubeServerToken} --build-arg APM_TRACER_VERSION=${APM_TRACER_VERSION}"
+    KANIKO_AWS_DEPLOYMENT_ROLE: ""
+    KANIKO_DOCKERFILE_NAME: "Dockerfile"
+    KANIKO_DOCKERFILE_FOLDER: "."
+    KANIKO_DOCKER_WORK_FOLDER: "$CI_PROJECT_DIR"
+    KANIKO_AWS_REGION: eu-central-1
+    KANIKO_ECR_REPO: ""
+    KANIKO_IMAGE_TAG: latest
+  stage: buildrelease
+  when: on_success
+  script:
+    - /kaniko/executor --context "$KANIKO_DOCKER_WORK_FOLDER" --dockerfile "$KANIKO_DOCKERFILE_FOLDER/$KANIKO_DOCKERFILE_NAME" $KANIKO_BUILD_EXTRA_ARGS --no-push $KANIKO_BUILD_EXTRA_ARGS
+    #we need to create our on image to pull latest tags, as we are using enblers template we cannot install anyting
+  after_script:
+      - echo "after script started"
+      - |
+        if [ $CI_PROJECT_NAME == "facit-sales" ]
+        then
+          echo "docker file for sales-processing"
+          export DOCKER_WORK_FOLDER="."
+          export DOCKERFILE_NAME="processing.Dockerfile"
+          export KANIKO_ECR_REPO="${FACIT_CI_REGISTRY}/facit-sales-processing"
+          export KANIKO_BUILD_EXTRA_ARGS="--build-arg appveyornugetpassword=${FACIT_GITLABNUGET_PASSWORD} --build-arg buildversion=${CI_COMMIT_SHORT_SHA} --build-arg sonarservertoken=${GroupSonarQubeServerToken} --build-arg APM_TRACER_VERSION=${APM_TRACER_VERSION}"
+          /kaniko/executor --context "${DOCKER_WORK_FOLDER}" --dockerfile "${DOCKERFILE_FOLDER}/${DOCKERFILE_NAME}" $KANIKO_BUILD_EXTRA_ARGS --no-push $KANIKO_BUILD_EXTRA_ARGS
+        fi
+  rules:
+    - if: $CI_COMMIT_BRANCH =~ /^release\/.*$/
+  tags:
+    - nonprod
+    - ec2
+    - facitng
+    - tuipsc
+
+SonarQube-Analysis:
+  stage: buildfeature
+  script:
+    - echo "this is an dummy sonarqube stage for web service only. However sonaqube steps were already running as part of build stage only"
+  rules:
+    - if: $CI_COMMIT_BRANCH =~ /^feature\/.*$/
+  tags:
+    - nonprod     
+    - tuipsc
+    - facitng
+    - ec2
+    
+
+SonarQube:
+  stage: sonarqube
+  environment: dv1
+  script:
+    - echo "this is an dummy sonarqube stage for web service only. However sonaqube steps were already running as part of build stage only"
+  rules:
+    - if: $CI_COMMIT_BRANCH == "master"
+  tags:
+    - nonprod
+    - tuipsc
+    - facitng
+    - ec2

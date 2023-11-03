@@ -1,0 +1,165 @@
+.ag-row .dateband-duration-cell.dateband-duration-cell.dateband-duration-cell {
+  border-left: 1px solid #dcdcdc;
+  border-right: 1px solid #dcdcdc;
+  border-bottom: 1px solid #dcdcdc;
+  background-color: #f5f5f5;
+}
+
+.ag-row:not(:first-child) .duration-dateband-to-cell.duration-dateband-to-cell.duration-dateband-to-cell {
+  border-top: 1px solid #dcdcdc;
+}
+.ag-row .duration-dateband-to-cell.duration-dateband-to-cell.duration-dateband-to-cell {
+  border-bottom: 1px solid #dcdcdc;
+}
+
+.ag-row .dateband-to-cell.dateband-to-cell.dateband-to-cell {
+  border-bottom: 1px solid #dcdcdc;
+}
+
+.ag-row:not(:first-child) .duration-dateband-from-cell.duration-dateband-from-cell.duration-dateband-from-cell {
+  border-top: 1px solid #dcdcdc;
+  border-right: 1px solid #dcdcdc;
+}
+.ag-row .duration-dateband-from-cell.duration-dateband-from-cell.duration-dateband-from-cell {
+  border-bottom: 1px solid #dcdcdc;
+  border-right: 1px solid #dcdcdc;
+}
+.ag-row:not(:first-child) .dateband-from-cell.dateband-from-cell.dateband-from-cell {
+  border-right: 1px solid #dcdcdc;
+}
+.ag-row .dateband-from-cell.dateband-from-cell.dateband-from-cell {
+  border-bottom: 1px solid #dcdcdc;
+  border-right: 1px solid #dcdcdc;
+}
+
+.ag-row
+  .dateband-date-cell-disabled.dateband-date-cell-disabled.dateband-date-cell-disabled.dateband-date-cell-disabled {
+  border-bottom: none;
+  border-top: none;
+  border-right: none;
+  background-color: #f5f5f5;
+}
+
+.ag-row .duration-dateband-value-cell.duration-dateband-value-cell.duration-dateband-value-cell {
+  border-bottom: 1px solid #dcdcdc;
+  border-right: 1px solid #dcdcdc;
+}
+.ag-row .dateband-value-cell.dateband-value-cell.dateband-value-cell {
+  border-bottom: 1px solid #dcdcdc;
+  border-right: 1px solid #dcdcdc;
+  border-left: 1px solid #dcdcdc;
+}
+
+.ag-row:not(:first-child) .duration-dateband-action-cell.duration-dateband-action-cell.duration-dateband-action-cell {
+  border-top: 1px solid #dcdcdc;
+  border-right: 1px solid #dcdcdc;
+}
+.ag-row .duration-dateband-action-cell.duration-dateband-action-cell.duration-dateband-action-cell {
+  border-bottom: 1px solid #dcdcdc;
+  border-right: 1px solid #dcdcdc;
+}
+.ag-row:not(:first-child) .dateband-action-cell.dateband-action-cell.dateband-action-cell {
+  border-right: 1px solid #dcdcdc;
+}
+.ag-row .dateband-action-cell.dateband-action-cell.dateband-action-cell {
+  border-bottom: 1px solid #dcdcdc;
+  border-right: 1px solid #dcdcdc;
+}
+
+.ag-row
+  .dateband-action-cell-disabled.dateband-action-cell-disabled.dateband-action-cell-disabled.dateband-action-cell-disabled {
+  background-color: #f5f5f5;
+  border-right: #dcdcdc;
+  border-bottom: none;
+  border-top: none;
+}
+
+.ag-row .dateband-action-cell-disabled.dateband-action-cell-disabled.dateband-action-cell-disabled .ag-react-container {
+  display: none;
+}
+
+.ag-row .dateband-cell-error.dateband-cell-error.dateband-cell-error {
+  border: 1px solid red;
+  background-color: rgba(255, 0, 0, 0.3);
+}
+
+.the-list .dateband-cell-error {
+  border: 1px solid red;
+  background-color: rgba(255, 0, 0, 0.07);
+}
+.the-list table tr:hover .dateband-cell-error {
+  border: 1px solid red;
+  background-color: rgba(255, 0, 0, 0.07);
+}
+
+.the-list table.dateband-main {
+  border: 1px solid #dcdcdc;
+  border-spacing: 0;
+}
+
+.the-list thead th {
+  background-color: #f3f0ec;
+  color: #092a5e;
+  font-weight: 600;
+  font-size: 11px;
+  font-family: Segoe UI, Helvetica Neue, sans-serif;
+  border-bottom: 1px solid #dcdcdc;
+  text-align: left;
+  padding-left: 5px;
+}
+
+.the-list table.dateband-main thead tr {
+  height: 32px;
+}
+
+.the-list table.dateband-main td.date-cell {
+  border-bottom: 1px solid #dcdcdc;
+  vertical-align: top;
+}
+
+.the-list table.dateband-main td {
+  border-right: 1px solid #dcdcdc;
+}
+
+.the-list table.dateband-durations td {
+  border-bottom: 1px solid #dcdcdc;
+  border-right: 1px solid #dcdcdc;
+}
+
+.the-list table.dateband-durations {
+  border-spacing: 0;
+}
+
+.the-list table.dateband-durations .duration-group {
+  width: 60px;
+  font-size: 11px;
+  font-family: Segoe UI, Helvetica Neue, sans-serif;
+  background-color: #f5f5f5;
+  padding-left: 4px;
+}
+
+.the-list table tr:hover .duration-group {
+  background-color: #e2f3fe;
+}
+
+.the-list table input {
+  height: 26px;
+  padding: 3px 4px;
+  border: 1px solid #fff;
+}
+
+.the-list .input-placeholder input::placeholder {
+  font-style: italic;
+  font-size: 9px;
+}
+
+.the-list table tr:hover {
+  background-color: #e2f3fe;
+}
+.the-list table tr:hover td {
+  background-color: transparent;
+}
+.the-list table tr:hover input {
+  background-color: transparent;
+  border-color: transparent;
+}

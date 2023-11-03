@@ -1,0 +1,38 @@
+# dummy commit ####
+# trustedGroupId: 690
+# jobRoles:
+#   - job: build-image-feature
+#     role: arn:aws:iam::100227514269:role/tuipsc-iam-facitng-admin-resources
+#   - job: scan-ecr-image-dev
+#     role: arn:aws:iam::100227514269:role/tuipsc-iam-facitng-admin-resources
+
+
+trustedGroupId: 690
+jobRoles:
+  - job: Build-Featurebranch
+    role: arn:aws:iam::100227514269:role/tuipsc-iam-facitng-admin-resources
+  - job: scan-ecr-image-dev
+    role: arn:aws:iam::100227514269:role/tuipsc-iam-facitng-admin-resources
+  - job: Build-Dev
+    role: arn:aws:iam::100227514269:role/tuipsc-iam-facitng-admin-resources
+  - job: SonarQube
+    role: arn:aws:iam::100227514269:role/tuipsc-iam-facitng-admin-resources
+  - job: Deploy-Dev
+    role: arn:aws:iam::535678545081:role/tuipsc-iam-facitng-admin-resources
+  - job: Build-Sit
+    role: arn:aws:iam::100227514269:role/tuipsc-iam-facitng-admin-resources
+  - job: Deploy-Sit
+    role: arn:aws:iam::764484831265:role/tuipsc-iam-facitng-admin-resources
+  - job: Build-Preprod
+    role: arn:aws:iam::100227514269:role/tuipsc-iam-facitng-admin-resources
+  - job: Deploy-Preprod
+    role: arn:aws:iam::764484831265:role/tuipsc-iam-facitng-admin-resources
+  - job: Build-Prod
+    role: arn:aws:iam::100227514269:role/tuipsc-iam-facitng-admin-resources
+  - job: Deploy-Prod
+    role: arn:aws:iam::482154792841:role/tuipsc-iam-facitng-admin-resources
+  - job: Build-Loadtest
+    role: arn:aws:iam::100227514269:role/tuipsc-iam-facitng-admin-resources
+  - job: Deploy-Loadtest
+    role: arn:aws:iam::535678545081:role/tuipsc-iam-facitng-admin-resources
+

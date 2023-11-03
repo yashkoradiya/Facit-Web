@@ -1,0 +1,42 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: "commercial-facit-web"
+  description: "web applicaton repository"
+  annotations:
+    backstage.io/techdocs-ref: dir:.
+    gitlab.com/project-slug: "commercial/fng-poc/facit-web"
+    tenable.io/webappscanning-uri: https://source.tui
+    datadoghq.com/dashboard-url: https://p.datadoghq.eu/sb/3xa6yrojqmtddgrm-a48c546fa554868e034885fa88860084
+    sonarqube.org/project-key: commercial-pricing-facit-web
+    leanix.net/uuid: d0340c14-a2cd-4cc5-9b6e-264a7f54b8f7
+  links:    
+    - url: https://facitng-dv1-rabbitmq-admin.facitng.aws.tuicloud.net/
+      title: FACIT-DEV-RabbitMQ
+    - url: https://facitng-sit-rabbitmq-admin.facitng.aws.tuicloud.net/
+      title: FACIT-SIT-RabbitMQ
+    - url: https://facitng-pprd-rabbitmq-admin.facitng.aws.tuicloud.net/
+      title: FACIT-PPRD-RabbitMQ
+    - url: https://facitng-prod-rabbitmq-admin.facitng.aws.tuicloud.net/
+      title: FACIT-PROD-RabbitMQ    
+    - url: https://facitng-web-dev.facitng.aws.tuicloud.net/
+      title: FACIT-DEV
+    - url: https://facitng-web-sit.facitng.aws.tuicloud.net/
+      title: FACIT-SIT
+    - url: https://facitng-web-pprd.facitng.aws.tuicloud.net/
+      title: FACIT-PPRD
+    - url: https://web.facitng.aws.tuicloud.net/
+      title: FACIT-PROD
+    - url: https://source.tui
+      title: GitLab    
+    - url: https://app.datadoghq.eu/dashboard/bhn-s9g-a9f/commercialpricing-dashboard?from_ts=1669130655379&to_ts=1669217055379&live=true
+      title: Monitoring Dashboard
+    - url: https://app-eu.apptio.com/cloudability#/dashboards/527468
+      title: Cost Dashboard in Apptio
+    - url: https://cloud.tenable.com/tio/app.html
+      title: Tenable
+spec:
+  type: "service"
+  lifecycle: "production"
+  owner: "commercial-eng"
+  system: "system:commercial-pricing"

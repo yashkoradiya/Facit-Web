@@ -1,0 +1,43 @@
+
+// $icons-path: '~@ag-grid-community/core/dist/styles/ag-theme-balham/icons/';
+$icons-path: '~ag-grid-community/styles/ag-theme-balham/icons/';
+//The path to the icon svg files. If you are to change that, make sure that the directory you point to contains the complete set of icons.
+
+
+$row-height: 22px;
+//The row height - if you change this, you also have to change the value of the `rowHeight` in the grid options. We are looking into removing this redundant step in the future.
+
+
+$secondary-font-size: 11px;
+//The header font size.
+
+$secondary-font-weight: 600;
+//The header font weight.
+
+$secondary-foreground-color: #092a5e;
+//The header font color.
+
+
+
+@use "~ag-grid-community/styles" as ag;
+
+// @import 'ag-grid-community/styles/ag-grid.css'; // Core grid CSS, always needed
+// @import 'ag-grid-community/styles/ag-theme-balham.css'; // Optional theme CSS
+
+@include ag.grid-styles((
+    theme: balham
+));
+
+.ag-theme-balham {
+    --ag-font-family: 'Segoe UI', 'Helvetica Neue', sans-serif;
+    --ag-font-size: 11px;
+    
+    --ag-foreground-color: #333;
+    --ag-header-foreground-color: rgb(35, 38, 39);
+    --ag-hover-color: #e2f3fe;
+    --ag-border-color: #dcdcdc;
+
+
+    --ag-grid-size: 4px;
+    --ag-cell-horizontal-padding: calc(var(--ag-grid-size) + 2);
+}

@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <meta name="theme-color" content="#000000" />
+    <!--
+       ______         _ _     _   _           _      _____
+      |  ____|       (_) |   | \ | |         | |    / ____|
+      | |__ __ _  ___ _| |_  |  \| | _____  _| |_  | |  __  ___ _ __
+      |  __/ _` |/ __| | __| | . ` |/ _ \ \/ / __| | | |_ |/ _ \ '_ \
+      | | | (_| | (__| | |_  | |\  |  __/>  <| |_  | |__| |  __/ | | |
+      |_|  \__,_|\___|_|\__| |_| \_|\___/_/\_\\__|  \_____|\___|_| |_|
+    -->
+    <style>
+      html,
+      body,
+      #root {
+        height: 100%;
+      }
+      .facit-body-loading {
+        font-family: TuiType, 'Segoe UI', 'Helvetica', 'Arial', sans-serif;
+        text-align: center;
+        height: 100%;
+        background-color: rgb(229, 227, 220);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .facit-body-loading #app-loading-wrapper {
+        max-width: 300px;
+        display: inline-block;
+      }
+
+      .facit-body-loading #app-loader-icon {
+        font-size: 50px;
+      }
+    </style>
+
+    <link rel="manifest" href="/manifest.json" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons" />
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" />
+    <title>Facit NG</title>
+  </head>
+
+  <body class="facit facit-body-loading">
+    <div id="app-loading-wrapper">
+      <i id="app-loader-icon" class="fa fa-circle-o-notch fa-spin"></i> <br />
+      <div id="loading-status"></div>
+    </div>
+    <div id="root"></div>
+  </body>
+</html>

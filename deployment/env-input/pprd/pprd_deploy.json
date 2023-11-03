@@ -1,0 +1,128 @@
+{
+  "containerDefinitions": [
+    {
+      "memoryReservation":1024,
+      "portMappings": [
+        {
+          "hostPort": 80,
+          "containerPort": 80,
+          "protocol": "tcp"
+        }
+      ],
+      "environment": [
+        {
+          "name": "ASPNETCORE_ENVIRONMENT",
+          "value": "{ASPNETCORE_ENVIRONMENT}"
+        }
+      ],
+      "secrets": [
+        {
+          "name": "REACT_APP_AUTHORITY",
+          "valueFrom": "arn:aws:ssm:eu-central-1:${FACIT_ACCOUNT_ID}:parameter/facit/{ENVIRONMENT}/web/REACT_APP_AUTHORITY"
+        },
+        {
+          "name": "REACT_APP_AVAILABLE_CURRENCIES",
+          "valueFrom": "arn:aws:ssm:eu-central-1:${FACIT_ACCOUNT_ID}:parameter/facit/{ENVIRONMENT}/web/REACT_APP_AVAILABLE_CURRENCIES"
+        },
+                {
+          "name": "REACT_APP_CLIENT_ID",
+          "valueFrom": "arn:aws:ssm:eu-central-1:${FACIT_ACCOUNT_ID}:parameter/facit/{ENVIRONMENT}/web/REACT_APP_CLIENT_ID"
+        },
+                {
+          "name": "REACT_APP_SOCKETS_HUB",
+          "valueFrom": "arn:aws:ssm:eu-central-1:${FACIT_ACCOUNT_ID}:parameter/facit/{ENVIRONMENT}/web/REACT_APP_SOCKETS_HUB"
+        }
+      ],
+      "logConfiguration": {
+        "logDriver": "awsfirelens",
+        "secretOptions": [
+            {
+                "name": "apikey",
+                "valueFrom": "arn:aws:ssm:eu-central-1:${FACIT_ACCOUNT_ID}:parameter/DATADOG_API_KEY"
+            }
+        ],
+        "options": {
+          "dd_message_key": "log",
+          "provider": "ecs",
+          "dd_service": "{CI_PROJECT_NAME}",
+          "Host": "http-intake.logs.datadoghq.eu",
+          "TLS": "on",
+          "dd_source": "dotnet",
+          "dd_tags": "project:facit,servicename:tuipsc-{ENVIRONMENT}-ecsservice-facitng-web,business_domain:c-pricing-service,service:commercial,account:tuigroup-trips-c-pricing-test,env:{ENVIRONMENT}",
+          "Name": "datadog"
+        }
+      },
+      "essential": true,
+      "name": "tuipsc-{ENVIRONMENT}-container-facitng-{FACIT_APPLICATION_NAME}",
+      "image": "{FACIT_CI_REGISTRY}/{CI_PROJECT_NAME}:{IMAGE_TAG}"
+    },
+    {
+      "logConfiguration": {
+          "logDriver": "awsfirelens",
+          "secretOptions": [
+              {
+                  "name": "apikey",
+                  "valueFrom": "arn:aws:ssm:eu-central-1:${FACIT_ACCOUNT_ID}:parameter/DATADOG_API_KEY"
+              }
+          ],
+          "options": {
+            "dd_message_key": "log",
+            "provider": "ecs",
+            "dd_service": "{CI_PROJECT_NAME}-datadog-agent",
+            "Host": "http-intake.logs.datadoghq.eu",
+            "TLS": "on",
+            "dd_source": "datadog",
+            "dd_tags": "project:facit,servicename:tuipsc-{ENVIRONMENT}-ecsservice-facitng-web,business_domain:c-pricing-service,service:commercial,account:tuigroup-trips-c-pricing-test,env:{ENVIRONMENT}",
+            "Name": "datadog"
+          }
+      },
+      "cpu": 10,
+      "memoryReservation": 256,
+      "environment": [
+        {
+          "name": "DD_SITE",
+          "value": "datadoghq.eu"
+        },
+        {
+          "name": "ECS_FARGATE",
+          "value": "true"
+        },
+        {
+          "name": "DD_PROCESS_AGENT_ENABLED",
+          "value": "true"
+        },
+        {
+          "name": "DD_APM_ENABLED",
+          "value": "true"
+        }
+      ],
+      "secrets": [
+          {
+              "name": "DD_API_KEY",
+              "valueFrom": "arn:aws:ssm:eu-central-1:${FACIT_ACCOUNT_ID}:parameter/DATADOG_API_KEY"
+          }
+      ],
+      "essential": true,
+      "image": "datadog/agent:latest",
+      "name": "datadog-agent"
+  },
+  {
+      "image": "public.ecr.aws/aws-observability/aws-for-fluent-bit:stable",
+      "firelensConfiguration": {
+        "type": "fluentbit",
+        "options": {
+          "enable-ecs-log-metadata": "true"
+        }
+      },
+      "name": "log_router",
+      "essential": true
+  }
+  ],
+  "family": "tuipsc-{ENVIRONMENT}-taskdefinition-facitng-{FACIT_APPLICATION_NAME}",
+  "requiresCompatibilities": ["FARGATE"],
+  "networkMode": "awsvpc",
+  "memory": "2048",
+  "cpu": "1024",
+  "taskRoleArn": "arn:aws:iam::${FACIT_ACCOUNT_ID}:role/tuipsc-{ENVIRONMENT}-iam-facitng-TaskRole",
+  "executionRoleArn": "arn:aws:iam::${FACIT_ACCOUNT_ID}:role/tuipsc-{ENVIRONMENT}-iam-facitng-TaskExecutionRole"
+}  
